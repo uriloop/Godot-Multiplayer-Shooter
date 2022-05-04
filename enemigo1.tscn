@@ -32,6 +32,7 @@ position = Vector2( 32, 0 )
 shape = SubResource( 1 )
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
 position = Vector2( 192, 0 )
