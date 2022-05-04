@@ -46,10 +46,15 @@ sync func instance_enemy1(id):
 	Network.networked_object_name_index += 1
 
 func _on_enemy_spawn_timer_timeout():
-	rpc("instance_enemy1", get_tree().get_network_unique_id())
-	
+	var enemy = enemy_scene.instance()
+	# rpc("instance_enemy1", get_tree().get_network_unique_id())
+	enemy.position = random_spawn_enemy_position()
+	add_child(enemy)
 	
 func random_spawn_enemy_position():
+	
+	
+	
 	var randomPlace= rng.randi_range(1,4)
 	
 	if (randomPlace==1):
