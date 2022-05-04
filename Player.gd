@@ -40,6 +40,7 @@ func _ready():
 		if is_network_master():
 			Global.player_master = self
 
+#cada frame/ delta time
 func _process(delta: float) -> void:
 	if username_text_instance != null:
 		username_text_instance.name = "username" + name

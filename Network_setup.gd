@@ -39,7 +39,7 @@ func _ready() -> void:
 # muestra el boton de 'start game' si hay mas de 1 jugador 
 func _process(_delta: float) -> void:
 	if get_tree().network_peer != null:
-		if get_tree().get_network_connected_peers().size() >= 1 and get_tree().is_network_server():
+		if get_tree().get_network_connected_peers().size() >= 0 and get_tree().is_network_server(): #    # y si el player es el que crea el servidor
 			start_game.show()
 		else:
 			start_game.hide()
@@ -71,7 +71,7 @@ func _on_Create_server_pressed():
 		# creamos el servidor
 		Network.create_server()
 	
-		# Le passamos al server la id para crear una instancia de player
+		# Creamos una instancia de player con una id unica
 		instance_player(get_tree().get_network_unique_id())
 
 # cuando pulsamos el botón de unirse

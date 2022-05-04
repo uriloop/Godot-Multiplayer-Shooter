@@ -17,6 +17,7 @@ func _ready() -> void:
 	
 
 # Cuando el usuario esta hosteando la partida se llama a esta función para que establezca las posiciones de spawn
+# se llama a esta función para que establezca las posiciones de spawn
 func setup_players_positions() -> void:
 	for player in Persistent_nodes.get_children():
 		if player.is_in_group("Player"):
@@ -43,14 +44,26 @@ sync func instance_enemy1(id):
 	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Persistent_nodes, random_spawn_enemy_position())
 	enemy1_instance.name = "Enemy1" + name + str(Network.networked_object_name_index)
 	enemy1_instance.set_network_master(id)
+	enemy1_instance.name = "Enemy1" + str(Network.networked_object_name_index)
+	enemy1_instance.set_network_master(1)
 	Network.networked_object_name_index += 1
 
 func _on_enemy_spawn_timer_timeout():
+<<<<<<< Updated upstream
 	var enemy = enemy_scene.instance()
 	# rpc("instance_enemy1", get_tree().get_network_unique_id())
 	enemy.position = random_spawn_enemy_position()
 	add_child(enemy)
+=======
+	# TODO    si estan todas las posiciones llenas o ocupadas no crear y reiniciar el timer por ejemplo?
+	#         otras opciones ...    
+	#                               Hacer un booleano de si ya se ha movido el enemigo. Si recorremos con un for i hay 4 que todavia no se han movido y 4 spawn_positions, esque esta todo full
+	#                               Convertir enemigos a RigidBody2D para que no puedan estar uno encima del otro/ ver si se puede lograr manteniendo el KinematicBody2D, me suena algo de que si.
+	Global.add_child(rpc("instance_enemy1", get_tree().get_network_unique_id()))
+	$enemy_spawn_timer.start()
+>>>>>>> Stashed changes
 	
+	# A este random solo pasarle las posiciones vacias que podriamos tener en un array y que haga el random sobre las posiciones del array y devolver pòsición directamente sin tener que hacer: if (rand==1): $spawnPosition/blabla.position
 func random_spawn_enemy_position():
 	
 	
@@ -65,3 +78,4 @@ func random_spawn_enemy_position():
 		return $Spawn_enemy/spawn3.position
 	elif (randomPlace==4):
 		return $Spawn_enemy/spawn4.position
+

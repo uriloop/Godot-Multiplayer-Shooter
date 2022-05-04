@@ -81,43 +81,45 @@ tile_data = PoolIntArray( -655373, 3, 0, -655372, 3, 0, -655371, 3, 0, -655370, 
 [node name="Spawn_locations" type="Node" parent="."]
 
 [node name="1" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 512, 512 )
+position = Vector2( 1758.36, 1216.46 )
 
 [node name="2" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 3584, 512 )
+position = Vector2( 2500.21, 1198.4 )
 
 [node name="3" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 512, 1792 )
+position = Vector2( 1595.79, 1761.9 )
 
 [node name="4" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 3584, 1792 )
+position = Vector2( 2656.76, 1816.08 )
 
 [node name="5" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 2048, 512 )
+position = Vector2( 2144.34, 1481.39 )
 
 [node name="6" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 2048, 1792 )
+position = Vector2( 2102.19, 1912.42 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 3 )
 
 [node name="enemy_spawn_timer" type="Timer" parent="."]
+wait_time = 3.308
+one_shot = true
 autostart = true
 
 [node name="Spawn_enemy" type="Node" parent="."]
 
 [node name="spawn" type="Position2D" parent="Spawn_enemy"]
-position = Vector2( 2822.92, -122.087 )
+position = Vector2( 2738.62, -43.8133 )
 
 [node name="spawn2" type="Position2D" parent="Spawn_enemy"]
-position = Vector2( 1245.4, -116.066 )
+position = Vector2( 1492.26, -61.8765 )
 
 [node name="spawn3" type="Position2D" parent="Spawn_enemy"]
-position = Vector2( -157.503, 594.417 )
+position = Vector2( 438.581, -61.8774 )
 
 [node name="spawn4" type="Position2D" parent="Spawn_enemy"]
-position = Vector2( 4225.82, 492.06 )
+position = Vector2( 3786.28, -73.9188 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
@@ -128,10 +130,10 @@ script = ExtResource( 7 )
 [node name="Control" type="Control" parent="Game_UI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -36.3032
-margin_top = 698.837
-margin_right = -36.3032
-margin_bottom = 698.837
+margin_left = -0.177002
+margin_top = 716.9
+margin_right = -0.177002
+margin_bottom = 716.9
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -140,10 +142,10 @@ __meta__ = {
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -87.8387
-margin_top = -1108.41
-margin_right = -87.8386
-margin_bottom = -1015.41
+margin_left = -15.5861
+margin_top = -674.894
+margin_right = -15.5861
+margin_bottom = -581.894
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 6
