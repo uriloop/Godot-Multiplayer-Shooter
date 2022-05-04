@@ -16,7 +16,7 @@ func _physics_process(delta):
 
 
 
-func _on_PlayerDetectionZone_body_entered(body):
+sync func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
 		player = body
 		

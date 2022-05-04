@@ -46,25 +46,16 @@ sync func instance_enemy1(id):
 	Network.networked_object_name_index += 1
 
 func _on_enemy_spawn_timer_timeout():
-<<<<<<< Updated upstream
-	var enemy = enemy_scene.instance()
-	# rpc("instance_enemy1", get_tree().get_network_unique_id())
-	enemy.position = random_spawn_enemy_position()
-	add_child(enemy)
-=======
 	# TODO    si estan todas las posiciones llenas o ocupadas no crear y reiniciar el timer por ejemplo?
 	#         otras opciones ...    
 	#                               Hacer un booleano de si ya se ha movido el enemigo. Si recorremos con un for i hay 4 que todavia no se han movido y 4 spawn_positions, esque esta todo full
 	#                               Convertir enemigos a RigidBody2D para que no puedan estar uno encima del otro/ ver si se puede lograr manteniendo el KinematicBody2D, me suena algo de que si.
 	Global.add_child(rpc("instance_enemy1", get_tree().get_network_unique_id()))
 	$enemy_spawn_timer.start()
->>>>>>> Stashed changes
+
 	
 	# A este random solo pasarle las posiciones vacias que podriamos tener en un array y que haga el random sobre las posiciones del array y devolver pòsición directamente sin tener que hacer: if (rand==1): $spawnPosition/blabla.position
 func random_spawn_enemy_position():
-	
-	
-	
 	var randomPlace= rng.randi_range(1,4)
 	
 	if (randomPlace==1):
