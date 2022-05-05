@@ -12,7 +12,7 @@ func _ready():
 
 func _physics_process(delta):
 	if (player):
-		rpc("actualizar_enemigo")
+		rpc("actualizar_enemigo",player,speed)
 		
 	else:
 		# Akí un movimiento random
@@ -21,9 +21,9 @@ func _physics_process(delta):
 	#no tira
 	#rpc("actualizar_enemigo")
 	
-sync func actualizar_enemigo():
+sync func actualizar_enemigo(player,speedo):
 	var direction = (player.position - self.position).normalized()
-	velocity = move_and_slide(direction * speed)
+	velocity = move_and_slide(direction * speedo)
 	facing = look_at(player.position)
 
 											
