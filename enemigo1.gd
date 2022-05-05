@@ -40,8 +40,8 @@ func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
 		player=body
 	#	hacer que si hay otro player más cerca, siga al nuevo player
-	elif (body.is_in_group("Player") and player.distance_to(self)>=body.distance_to(self)):
-		player=body
+	#elif (body.is_in_group("Player") and player.distance_to(self)>=body.distance_to(self)):
+		#player=body
 
 
 
