@@ -199,5 +199,3 @@ func _exit_tree() -> void:
 	if get_tree().has_network_peer():
 		if is_network_master():
 			Global.player_master = null
-
-
