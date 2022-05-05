@@ -14,9 +14,8 @@ func _ready():
 
 func _physics_process(delta):
 	if (player):
-		var direction = (player.position - self.position).normalized()
-		velocity = move_and_slide(direction * speed)
-		facing = look_at(player.position)
+		rpc("actualizar_enemigo")
+		
 	else:
 		# Akí un movimiento random
 		pass
@@ -25,25 +24,21 @@ func _physics_process(delta):
 	#rpc("actualizar_enemigo")
 	
 sync func actualizar_enemigo():
-	#global_position=velocity
-	#global_rotation=facing
-	#puppet_player_seeking = player
-	for enemy in Global.alive_enemies:
-		if (self.get_instance_id()==enemy.get_instance_id()):
-			enemy.position=velocity
-			enemy.rotation=facing
-			enemy.player=player
-			
+	var direction = (player.position - self.position).normalized()
+	velocity = move_and_slide(direction * speed)
+	facing = look_at(player.position)
 
 											
 func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
-		if get_tree().has_network_peer():
-			if (get_tree().is_network_server()):
-				player=body
+		if (get_tree().is_network_server()):
+			rpc("seek_new_player",body)
 	#	hacer que si hay otro player más cerca, siga al nuevo player
 	#elif (body.is_in_group("Player") and player.distance_to(self)>=body.distance_to(self)):
 		#player=body
+
+sync func seek_new_player(body):
+	player=body
 
 
 func _on_hurtBox_area_entered(area):
