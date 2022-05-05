@@ -1,14 +1,16 @@
 extends KinematicBody2D
 
-puppet var puppet_player_seeking = Vector2(0, 0) 
-puppet var puppet_velocity = Vector2()
-puppet var puppet_facing = 0
+
 
 var speed = 200
 
 var velocity = Vector2(0, 0)
 var facing = 0
 var player = null
+
+func _ready():
+	Global.alive_enemies.append(self)
+
 
 func _physics_process(delta):
 	if (player):
@@ -19,19 +21,24 @@ func _physics_process(delta):
 		# Akí un movimiento random
 		pass
 	
+	#no tira
 	#rpc("actualizar_enemigo")
 	
-	#no tira
 sync func actualizar_enemigo():
-	global_position=velocity
-	global_rotation=facing
-	puppet_player_seeking = player
+	#global_position=velocity
+	#global_rotation=facing
+	#puppet_player_seeking = player
+	for enemy in Global.alive_enemies:
+		if (self.get_instance_id()==enemy.get_instance_id()):
+			enemy.position=velocity
+			enemy.rotation=facing
+			enemy.player=player
 
 
 func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
 		player=body
-	#	
+	#	hacer que si hay otro player más cerca, siga al nuevo player
 	elif (body.is_in_group("Player") and player.distance_to(self)>=body.distance_to(self)):
 		player=body
 
@@ -43,6 +50,7 @@ func _on_hurtBox_area_entered(area):
 		rpc("destroy_enemy1")
 
 sync func destroy_enemy1():
+		Global.alive_enemies.erase(self)
 		queue_free()
 	
 # hay que meterle un tween y interpolate entre las posiciones del server y del cliente. Luego una sync func que actualice la posicion. deberia prevalecer la posicion del servidor
