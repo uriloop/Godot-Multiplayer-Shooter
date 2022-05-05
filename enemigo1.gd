@@ -12,7 +12,8 @@ func _ready():
 
 func _physics_process(delta):
 	if (player):
-		rpc("actualizar_enemigo",player,speed)
+		if (get_tree().is_network_server()):
+			rpc("actualizar_enemigo",player,speed)
 		
 	else:
 		# Akí un movimiento random
