@@ -35,23 +35,26 @@ sync func actualizar_enemigo():
 			enemy.player=player
 			
 
-
+											
 func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
-		player=body
+		if get_tree().has_network_peer():
+			if (get_tree().is_network_server()):
+				player=body
 	#	hacer que si hay otro player más cerca, siga al nuevo player
 	#elif (body.is_in_group("Player") and player.distance_to(self)>=body.distance_to(self)):
 		#player=body
 
 
-
 func _on_hurtBox_area_entered(area):
 	if (area.is_in_group("Player_damager")):
 		# Aquí algo para que envié la señal de muerte a todos
-		rpc("destroy_enemy1")
+		if get_tree().has_network_peer():
+			if (get_tree().is_network_server()):
+				rpc("destroy_enemy1")
 
 sync func destroy_enemy1():
 		Global.alive_enemies.erase(self)
 		queue_free()
-	
+		
 # hay que meterle un tween y interpolate entre las posiciones del server y del cliente. Luego una sync func que actualice la posicion. deberia prevalecer la posicion del servidor
