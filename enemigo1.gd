@@ -33,6 +33,7 @@ sync func actualizar_enemigo():
 			enemy.position=velocity
 			enemy.rotation=facing
 			enemy.player=player
+			
 
 
 func _on_PlayerDetectionZone_body_entered(body):
