@@ -1,10 +1,13 @@
 extends KinematicBody2D
 
 var speed = 200
-
+var puppet_velocity
+var puppet_facing
 var velocity = Vector2()
 var facing = 0
 var player = null
+
+
 
 func _ready():
 	Global.alive_enemies.append(self)
@@ -14,16 +17,17 @@ func _ready():
 func _physics_process(delta):
 	if (player):
 		if is_network_master():
+			self.rpc("_update_state",puppet_velocity,puppet_facing)
 			#self.rset("actualizar_enemigo",player,speed)
 			print("Server agewgowjrg")
 		else:
-			self.rpc_unreliable("actualizar_enemigo",player,speed)
 			print("Actualizando enemigo")
-	else:
-		# Akí un movimiento random
-		print("no funciona nada")
-		pass
-	
+			velocity= puppet_velocity
+			facing= puppet_facing
+		
+		move_and_collide(facing + speed)
+		if not is_network_master():
+			puppet_velocity = velocity
 	#no tira
 	#rpc("actualizar_enemigo")
 #	if is_network_master():
@@ -36,11 +40,15 @@ func _physics_process(delta):
 #    if not is_network_master():
 #        puppet_pos = position # To avoid jitter
 	
-remotesync func actualizar_enemigo(player,speedo):
-	if (is_instance_valid(player)):
-		velocity = move_and_slide( ((player.global_position - self.global_position).normalized()) * speedo)
-		facing = look_at(player.position)
-
+	
+puppet func _update_state(p_pos, p_facing):
+	puppet_velocity = p_pos
+	puppet_facing = p_facing
+	
+puppet func actualizar_enemigo(player,speedo):
+	velocity = move_and_slide( ((player.global_position - self.global_position).normalized()) * speedo)
+	facing = look_at(player.position)
+	self.motion
 											
 func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
