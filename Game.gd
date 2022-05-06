@@ -43,6 +43,7 @@ sync func instance_enemy1(id):
 	enemy1_instance.set_network_master(1)
 	enemy1_instance.global_position = random_spawn_enemy_position()
 	Network.networked_object_name_index += 1
+	Global.add_child(enemy1_instance)
 
 func _on_enemy_spawn_timer_timeout():
 	# TODO    si estan todas las posiciones llenas o ocupadas no crear y reiniciar el timer por ejemplo?
