@@ -26,6 +26,15 @@ func _physics_process(delta):
 	
 	#no tira
 	#rpc("actualizar_enemigo")
+#	if is_network_master():
+#        rpc("_update_state", puppet_pos, puppet_motion)
+#    else:
+#       position = puppet_pos
+#        motion = puppet_motion
+#
+#    move_and_slide(motion * MOTION_SPEED)
+#    if not is_network_master():
+#        puppet_pos = position # To avoid jitter
 	
 remotesync func actualizar_enemigo(player,speedo):
 	if (is_instance_valid(player)):
