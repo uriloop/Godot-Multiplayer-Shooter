@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
 var speed = 200
-var puppet_velocity
-var puppet_facing
+var puppet_velocity = Vector2()
+var puppet_facing = 0
 var velocity = Vector2()
 var facing = 0
 var player = null
