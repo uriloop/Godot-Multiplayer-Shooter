@@ -18,9 +18,10 @@ func _physics_process(delta):
 			print("Server agewgowjrg")
 		else:
 			self.rpc_unreliable("actualizar_enemigo",player,speed)
+			print("Actualizando enemigo")
 	else:
 		# Akí un movimiento random
-		
+		print("no funciona nada")
 		pass
 	
 	#no tira
