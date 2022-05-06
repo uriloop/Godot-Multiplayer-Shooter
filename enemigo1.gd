@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var speed = 200
 
-var velocity = Vector2(0, 0)
+var velocity = Vector2()
 var facing = 0
 var player = null
 
@@ -22,10 +22,9 @@ func _physics_process(delta):
 	#no tira
 	#rpc("actualizar_enemigo")
 	
-#remotesync func actualizar_enemigo(player,speedo):
-#	var direction = (player.position - self.position).normalized()
-#	velocity = move_and_slide(direction * speedo)
-#	facing = look_at(player.position)
+remotesync func actualizar_enemigo(player,speedo):
+	velocity = move_and_slide( ((player.position - self.position).normalized()) * speedo)
+	facing = look_at(player.position)
 
 											
 func _on_PlayerDetectionZone_body_entered(body):
@@ -47,7 +46,7 @@ func _on_hurtBox_area_entered(area):
 			if (get_tree().is_network_server()):
 				rpc("destroy_enemy1")
 
-sync func destroy_enemy1():
+remotesync func destroy_enemy1():
 		Global.alive_enemies.erase(self)
 		queue_free()
 		
