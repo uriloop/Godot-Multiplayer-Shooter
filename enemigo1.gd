@@ -12,10 +12,10 @@ func _ready():
 
 
 func _physics_process(delta):
-	if (player != null):
+	if (player):
 		if (get_tree().is_network_server()):
 			#self.rset("actualizar_enemigo",player,speed)
-			print("Server is working")
+			print("Server agewgowjrg")
 		else:
 			self.rpc_unreliable("actualizar_enemigo",player,speed)
 	else:
