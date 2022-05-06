@@ -38,10 +38,10 @@ func _player_disconnected(id) -> void:
 var rng = RandomNumberGenerator.new()
 
 sync func instance_enemy1(id):
-	var enemy1_instance = enemy_scene.instance()
+	var enemy1_instance = enemy_scene.instance_node_at_location(enemy_scene,Persistent_nodes, random_spawn_enemy_position())
 	enemy1_instance.name = "Enemy1" + str(Network.networked_object_name_index)
 	enemy1_instance.set_network_master(1)
-	enemy1_instance.global_position=random_spawn_enemy_position();
+#	enemy1_instance.global_position=random_spawn_enemy_position();
 	Network.networked_object_name_index += 1
 	Global.add_child(enemy1_instance)
 
