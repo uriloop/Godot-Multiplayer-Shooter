@@ -11,7 +11,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	if (player):
+	if (player != null):
 		#if (get_tree().is_network_server()):
 		self.rpc_unreliable("actualizar_enemigo",player,speed)
 		
@@ -23,8 +23,9 @@ func _physics_process(delta):
 	#rpc("actualizar_enemigo")
 	
 remotesync func actualizar_enemigo(player,speedo):
-	velocity = move_and_slide( ((player.global_position - self.global_position).normalized()) * speedo)
-	facing = look_at(player.position)
+	if (player != null):
+		velocity = move_and_slide( ((player.global_position - self.global_position).normalized()) * speedo)
+		facing = look_at(player.position)
 
 											
 func _on_PlayerDetectionZone_body_entered(body):
