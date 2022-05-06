@@ -37,6 +37,7 @@ func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
 		if (get_tree().is_network_server()):
 			rset("seek_new_player",body)
+			print("signar player")
 	#	hacer que si hay otro player más cerca, siga al nuevo player
 	#elif (body.is_in_group("Player") and player.distance_to(self)>=body.distance_to(self)):
 		#player=body
