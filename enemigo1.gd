@@ -25,7 +25,7 @@ func _physics_process(delta):
 			velocity= puppet_velocity
 			facing= puppet_facing
 		
-		move_and_collide(facing * speed)
+		move_and_collide(velocity * speed)
 		if not is_network_master():
 			puppet_velocity = velocity
 	#no tira
