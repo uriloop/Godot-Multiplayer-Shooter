@@ -13,7 +13,7 @@ func _ready():
 
 func _physics_process(delta):
 	if (player):
-		if (get_tree().is_network_server()):
+		if is_network_master():
 			#self.rset("actualizar_enemigo",player,speed)
 			print("Server agewgowjrg")
 		else:
