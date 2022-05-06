@@ -10,13 +10,17 @@ func _ready():
 	Global.alive_enemies.append(self)
 
 
+
 func _physics_process(delta):
 	if (player != null):
-		#if (get_tree().is_network_server()):
-		self.rpc_unreliable("actualizar_enemigo",player,speed)
-		
+		if (get_tree().is_network_server()):
+			#self.rset("actualizar_enemigo",player,speed)
+			pass
+		else:
+			self.rpc_unreliable("actualizar_enemigo",player,speed)
 	else:
 		# Akí un movimiento random
+		
 		pass
 	
 	#no tira
@@ -31,12 +35,12 @@ remotesync func actualizar_enemigo(player,speedo):
 func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
 		if (get_tree().is_network_server()):
-			rpc("seek_new_player",body)
+			rset("seek_new_player",body)
 	#	hacer que si hay otro player más cerca, siga al nuevo player
 	#elif (body.is_in_group("Player") and player.distance_to(self)>=body.distance_to(self)):
 		#player=body
 
-sync func seek_new_player(body):
+remotesync func seek_new_player(body):
 	player=body
 
 
