@@ -23,7 +23,7 @@ func _physics_process(delta):
 	#rpc("actualizar_enemigo")
 	
 remotesync func actualizar_enemigo(player,speedo):
-	velocity = move_and_slide( ((player.position - self.position).normalized()) * speedo)
+	velocity = move_and_slide( ((player.global_position - self.global_position).normalized()) * speedo)
 	facing = look_at(player.position)
 
 											
