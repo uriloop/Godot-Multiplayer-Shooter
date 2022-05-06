@@ -50,7 +50,7 @@ puppet func actualizar_enemigo(player,speedo):
 	facing = look_at(player.position)
 	self.motion
 											
-func _on_PlayerDetectionZone_body_entered(body):
+remote func _on_PlayerDetectionZone_body_entered(body):
 	if (body.is_in_group("Player") and player == null):
 		if (get_tree().is_network_server()):
 			rpc("seek_new_player",body)
@@ -59,7 +59,7 @@ func _on_PlayerDetectionZone_body_entered(body):
 	#elif (body.is_in_group("Player") and player.distance_to(self)>=body.distance_to(self)):
 		#player=body
 
-puppet func seek_new_player(body):
+remote func seek_new_player(body):
 	print("signated player")
 	player=body
 
