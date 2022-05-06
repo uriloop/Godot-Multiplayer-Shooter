@@ -23,9 +23,9 @@ func _physics_process(delta):
 	#rpc("actualizar_enemigo")
 	
 remotesync func actualizar_enemigo(player,speedo):
-	var direction = (player.position - self.position).normalized()
-	velocity = move_and_slide(direction * speedo)
-	facing = look_at(player.position)
+#	var direction = (player.position - self.position).normalized()
+#	velocity = move_and_slide(direction * speedo)
+#	facing = look_at(player.position)
 
 											
 func _on_PlayerDetectionZone_body_entered(body):
