@@ -13,7 +13,7 @@ func _ready():
 func _physics_process(delta):
 	if (player):
 		if (get_tree().is_network_server()):
-			rpc("actualizar_enemigo",player,speed)
+			self.rpc_unreliable("actualizar_enemigo",player,speed)
 		
 	else:
 		# Akí un movimiento random
@@ -22,7 +22,7 @@ func _physics_process(delta):
 	#no tira
 	#rpc("actualizar_enemigo")
 	
-sync func actualizar_enemigo(player,speedo):
+remotesync func actualizar_enemigo(player,speedo):
 	var direction = (player.position - self.position).normalized()
 	velocity = move_and_slide(direction * speedo)
 	facing = look_at(player.position)
