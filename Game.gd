@@ -37,8 +37,8 @@ func _player_disconnected(id) -> void:
 
 var rng = RandomNumberGenerator.new()
 
-sync func instance_enemy1(id):
-	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Persistent_nodes, random_spawn_enemy_position())
+remote func instance_enemy1(id):
+	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Global, random_spawn_enemy_position())
 	enemy1_instance.name = "Enemy1" + str(Network.networked_object_name_index)
 	enemy1_instance.set_network_master(1)
 #	enemy1_instance.global_position=random_spawn_enemy_position();
@@ -50,7 +50,7 @@ func _on_enemy_spawn_timer_timeout():
 	#         otras opciones ...    
 	#                               Hacer un booleano de si ya se ha movido el enemigo. Si recorremos con un for i hay 4 que todavia no se han movido y 4 spawn_positions, esque esta todo full
 	#                               Convertir enemigos a RigidBody2D para que no puedan estar uno encima del otro/ ver si se puede lograr manteniendo el KinematicBody2D, me suena algo de que si.
-	(rpc("instance_enemy1", get_tree().get_network_unique_id()))
+	rpc("instance_enemy1", get_tree().get_network_unique_id())
 	$enemy_spawn_timer.start()
 
 	

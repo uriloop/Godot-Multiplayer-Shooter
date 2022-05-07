@@ -20,6 +20,7 @@ puppet var puppet_velocity = Vector2()
 puppet var puppet_rotation = 0
 puppet var puppet_username = "" setget puppet_username_set
 
+onready var softCollision = $SoftCollision
 onready var tween = $Tween
 onready var sprite = $Sprite
 onready var reload_timer = $Reload_timer
@@ -50,6 +51,8 @@ func _process(delta: float) -> void:
 			var x_input = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
 			var y_input = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up"))
 			
+			if softCollision.is_colliding():
+				velocity += softCollision.get_push_vector() * delta * 400
 			velocity = Vector2(x_input, y_input).normalized()
 			
 			move_and_slide(velocity * speed)
@@ -64,6 +67,8 @@ func _process(delta: float) -> void:
 			rotation = lerp_angle(rotation, puppet_rotation, delta * 8)
 			
 			if not tween.is_active():
+				if softCollision.is_colliding():
+					puppet_velocity += softCollision.get_push_vector() * delta * 400
 				move_and_slide(puppet_velocity * speed)
 	
 	if hp <= 0:
@@ -152,10 +157,10 @@ func update_shoot_mode(shoot_mode):
 func _on_Reload_timer_timeout():
 	is_reloading = false
 
-func _on_Hit_timer_timeout():
+func _on_Hurt_timer_timeout():
 	modulate = Color(1, 1, 1, 1)
 
-func _on_Hitbox_area_entered(area):
+func _on_Hurtbox_area_entered(area):
 	if get_tree().is_network_server():
 		if area.is_in_group("Player_damager") and area.get_parent().player_owner != int(name):
 			rpc("hit_by_damager", area.get_parent().damage)

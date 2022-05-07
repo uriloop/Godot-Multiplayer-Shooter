@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://enemigo1.gd" type="Script" id=1]
 [ext_resource path="res://enemy.png" type="Texture" id=2]
+[ext_resource path="res://PlayerDetectionZone.gd" type="Script" id=3]
+[ext_resource path="res://SoftCollision.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 59.1322
@@ -18,6 +20,8 @@ height = 0.0
 "Net",
 ]]
 rotation = 1.5708
+collision_layer = 16
+collision_mask = 19
 collision/safe_margin = 5.988
 script = ExtResource( 1 )
 
@@ -26,29 +30,33 @@ texture = ExtResource( 2 )
 offset = Vector2( 31.4938, -8.1358 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 light_mask = 0
 position = Vector2( 32, 0 )
 shape = SubResource( 1 )
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
 collision_layer = 0
+collision_mask = 2
+script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
 position = Vector2( 192, 0 )
 shape = SubResource( 2 )
 
 [node name="Health" type="Node2D" parent="."]
-visible = false
 
 [node name="hurtBox" type="Area2D" parent="." groups=[
 "Enemy",
 ]]
-visible = false
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
-visible = false
+modulate = Color( 0.0117647, 0.00784314, 0, 1 )
 position = Vector2( 24, -8.58307e-05 )
 shape = SubResource( 3 )
-[connection signal="body_entered" from="PlayerDetectionZone" to="." method="_on_PlayerDetectionZone_body_entered"]
+
+[node name="SoftCollision" parent="." instance=ExtResource( 4 )]
+[connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
+[connection signal="body_exited" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_exited"]
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurtBox_area_entered"]
