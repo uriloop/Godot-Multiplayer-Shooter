@@ -7,7 +7,7 @@
 radius = 59.1322
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 576.0
+radius = 1272.1
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 64.0
@@ -24,21 +24,17 @@ texture = ExtResource( 2 )
 offset = Vector2( 31.4938, -8.1358 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 light_mask = 0
 position = Vector2( 32, 0 )
 shape = SubResource( 1 )
 
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
-visible = false
-position = Vector2( 192, 0 )
+position = Vector2( 192, -0.000701904 )
 shape = SubResource( 2 )
 
 [node name="Health" type="Node2D" parent="."]
-visible = false
 
 [node name="hurtBox" type="Area2D" parent="." groups=[
 "Enemy",

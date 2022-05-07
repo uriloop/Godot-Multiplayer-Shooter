@@ -81,28 +81,29 @@ tile_data = PoolIntArray( -655373, 3, 0, -655372, 3, 0, -655371, 3, 0, -655370, 
 [node name="Spawn_locations" type="Node" parent="."]
 
 [node name="1" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 512, 512 )
+position = Vector2( 1796.67, 1029.32 )
 
 [node name="2" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 3584, 512 )
+position = Vector2( 2514.88, 1055.18 )
 
 [node name="3" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 512, 1792 )
+position = Vector2( 1693.21, 1395.39 )
 
 [node name="4" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 3584, 1792 )
+position = Vector2( 2437.28, 1429.88 )
 
 [node name="5" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 2048, 512 )
+position = Vector2( 2185.95, 908.61 )
 
 [node name="6" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 2048, 1792 )
+position = Vector2( 2091.11, 1490.23 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 3 )
 
 [node name="enemy_spawn_timer" type="Timer" parent="."]
+wait_time = 5.0
 autostart = true
 
 [node name="Spawn_enemy" type="Node" parent="."]

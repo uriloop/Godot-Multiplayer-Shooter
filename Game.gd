@@ -9,11 +9,11 @@ var current_player_for_spawn_location_number = null
 
 func _ready() -> void:
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-	
+	$enemy_spawn_timer.start()
 	if get_tree().is_network_server():
 		setup_players_positions()
-	
-	$enemy_spawn_timer.start()
+
+		
 	
 
 # Cuando el usuario esta hosteando la partida se llama a esta función para que establezca las posiciones de spawn
@@ -40,13 +40,15 @@ func _player_disconnected(id) -> void:
 var rng = RandomNumberGenerator.new()
 
 sync func instance_enemy1(id):
-	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Persistent_nodes, random_spawn_enemy_position())
+	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Global, random_spawn_enemy_position())
 	enemy1_instance.name = "Enemy1" + name + str(Network.networked_object_name_index)
-	enemy1_instance.set_network_master(id)
+	enemy1_instance.set_network_master(1)
 	Network.networked_object_name_index += 1
+	Global.add_child(enemy1_instance)
 
 func _on_enemy_spawn_timer_timeout():
-	rpc("instance_enemy1", get_tree().get_network_unique_id())
+	if (is_network_master()):
+		rpc("instance_enemy1", get_tree().get_network_unique_id())
 	
 	
 func random_spawn_enemy_position():
