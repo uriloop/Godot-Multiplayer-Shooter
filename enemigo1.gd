@@ -2,73 +2,16 @@ extends KinematicBody2D
 
 var speed = 200
 
-var velocity = Vector2(0, 0) setget set_velocity
-var facing = 0 setget set_facing
+var velocity = Vector2(0, 0)
+var facing = 0 
 var player = false
-var direction = 0 setget set_direction
+var direction = 0 
 onready var playerDetectionZone = $PlayerDetectionZone
-var jugador = null setget set_jugador
+var jugador = null
 var motion = Vector2.ZERO
 
 
 onready var softCollision = $SoftCollision
-
-puppet var puppet_motion = Vector2.ZERO setget puppet_motion_set
-puppet var puppet_jugador = null setget puppet_jugador_set
-puppet var puppet_direction = Vector2() setget puppet_direction_set
-puppet var puppet_velocity = Vector2() setget puppet_velocity_set
-puppet var puppet_facing = 0 setget puppet_facing_set
-
-func puppet_motion_set(new_value) -> void:
-	puppet_motion = new_value
-	
-	if not is_network_master():
-		motion = puppet_motion
-
-func puppet_jugador_set(new_value) -> void:
-	puppet_jugador = new_value
-	
-	if not is_network_master():
-		jugador = puppet_jugador
-
-func set_jugador(new_value):
-	jugador = new_value	
-	
-	if is_network_master():
-		rset("puppet_jugador_set", jugador)
-
-func puppet_direction_set(new_value) -> void:
-	puppet_direction = new_value
-	
-	if not is_network_master():
-		direction = puppet_direction
-
-func puppet_facing_set(new_value) -> void:
-	facing = new_value
-	
-func set_facing(new_value):
-	facing = new_value	
-	
-	if is_network_master():
-		rset("puppet_facing_set", facing)
-
-func puppet_velocity_set(new_value) -> void:
-	velocity = new_value
-	
-	if not is_network_master():
-		velocity = puppet_velocity
-
-func set_velocity(new_value):
-	velocity = new_value
-	
-	if is_network_master():
-		rset("puppet_velocity_set", velocity)
-
-func set_direction(new_value):
-	direction = new_value
-	
-	if is_network_master():
-		rset("puppet_direction_set", direction)
 
 func _ready():
 	Global.alive_enemies.append(self)
@@ -80,9 +23,14 @@ func _physics_process(delta):
 		if is_network_master():
 			if jugador != null:
 				print("soy servidor, creo que hago cosas")
-				if softCollision.is_colliding():
-					velocity += softCollision.get_push_vector() * delta * 400
-				rpc("actualizar_enemigo_s",jugador.global_position, global_position)
+#				if softCollision.is_colliding():
+#					velocity += softCollision.get_push_vector() * delta * 400
+				direction = (jugador.global_position - global_position).normalized()
+				#velocity = move_and_slide(direction * speed)
+				facing = look_at(direction)
+				velocity = move_and_collide(direction * speed)
+				rpc("movimiento",velocity,facing,jugador)
+				#rpc("actualizar_enemigo_s",jugador.global_position, global_position)
 #				move_and_slide(velocity * speed)
 #				#rpc("actualizar_enemigo",direction,speed)
 ##				var antidirection = jugador.global_position - global_position
@@ -104,6 +52,12 @@ func _physics_process(delta):
 		seek_new_player()
 	#no tira
 	#rpc("actualizar_enemigo")
+
+slave func movimiento(velo,fac,play):
+	velocity = velo
+	facing = fac
+	jugador = play
+	
 
 sync func actualizar_enemigo_s(player,mi):
 	direction = (player - mi).normalized()
