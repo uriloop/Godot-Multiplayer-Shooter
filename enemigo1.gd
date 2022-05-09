@@ -10,6 +10,8 @@ onready var playerDetectionZone = $PlayerDetectionZone
 var jugador = null
 var motion = Vector2.ZERO
 
+slave var slave_position = Vector2()
+slave var slave_velocity = Vector2()
 
 onready var softCollision = $SoftCollision
 
@@ -25,11 +27,13 @@ func _physics_process(delta):
 				print("soy servidor, creo que hago cosas")
 #				if softCollision.is_colliding():
 #					velocity += softCollision.get_push_vector() * delta * 400
-				direction = (jugador.global_position - global_position).normalized()
+				direction = (jugador.position - position).normalized()
 				#velocity = move_and_slide(direction * speed)
 				facing = look_at(direction)
 				velocity = move_and_collide(direction * speed)
-				rpc("movimiento",velocity,facing,jugador)
+				rset_unreliable('slave_position',position)
+				rset('slave_velocity',velocity)
+				#rpc("movimiento",velocity,facing,jugador)
 				#rpc("actualizar_enemigo_s",jugador.global_position, global_position)
 #				move_and_slide(velocity * speed)
 #				#rpc("actualizar_enemigo",direction,speed)
@@ -38,7 +42,9 @@ func _physics_process(delta):
 ##				velocity = move_and_collide(direction * speed)
 #				facing = look_at(jugador.global_position)
 #	#			rpc("actualizar_enemigo",player,speed)
-#		else:
+		else:
+			velocity = slave_velocity
+			position = slave_position
 #			# Akí un movimiento random
 #			print("soy cliente, pero no hago nada xD")
 #			puppet_facing = facing
@@ -48,6 +54,8 @@ func _physics_process(delta):
 #			puppet_motion = puppet_motion.move_toward(puppet_velocity * speed, 300 * 8)
 #			puppet_motion = move_and_slide(puppet_motion)
 			
+		if get_tree().is_network_server():
+			Global.update_position(name,position)
 	else:
 		seek_new_player()
 	#no tira

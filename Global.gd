@@ -18,3 +18,7 @@ func instance_node(node: Object, parent: Object) -> Object:
 	var node_instance = node.instance()
 	parent.add_child(node_instance)
 	return node_instance
+
+func update_position(name,position):
+	if alive_enemies.has(name):
+		alive_enemies[name].position = position

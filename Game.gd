@@ -66,4 +66,3 @@ func random_spawn_enemy_position():
 		return $Spawn_enemy/spawn3.position
 	elif (randomPlace==4):
 		return $Spawn_enemy/spawn4.position
-
